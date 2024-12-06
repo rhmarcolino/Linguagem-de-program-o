@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes - IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .patients-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .patient-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #f9f9f9;
+        }
+        .patient-card h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .patient-info p {
+            margin: 5px 0;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn-container button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .btn-container button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Pacientes Cadastrados</h1>
+
+    {% if pacientes %}
+    <div class="patients-container">
+        {% for p in pacientes %}
+        <div class="patient-card">
+            <h2>{{ p.nome }}</h2>
+            <div class="patient-info">
+                <p><strong>Endereço:</strong> {{ p.endereco }}</p>
+                <p><strong>IMC:</strong> 
+                    {% if p.imc %}
+                        {{ p.imc|floatformat:2 }}
+                    {% else %}
+                        Não calculado
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p style="text-align:center;">nenhum paciente encontrado.</p>
+    {% endif %}
+
+    <div class="btn-container">
+        <a href="{% url 'calculer_imc' %}">
+            <button type="button">Ir para o cálculo de IMC</button>
+        </a>
+    </div>
+
+</body>
+</html>
